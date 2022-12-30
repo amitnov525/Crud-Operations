@@ -1,0 +1,47 @@
+{% extends 'main/base.html'%}
+{% block content%}
+<div class="row">
+    <div class="col-sm-4">
+        <h3 class="text-center alert alert-info">ADD STUDENT</h3>
+        <form action="" method="POST">
+            {% csrf_token %} 
+            {{fm.as_p}}
+            <input type="submit"  class="btn btn-success" value="ADD">
+        </form>
+    </div>
+    <div class="col sm-7 offset-1">
+        <h3 class="text-center alert alert-info">SHOW STUDENT</h3>
+        <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">ID</th>
+                <th scope="col">NAME</th>
+                <th scope="col">EMAIL</th>
+                <th scope="col">PASSWORD</th>
+                <th scope="col">ACTION</th>
+              </tr>
+            </thead>
+            <tbody>
+                {% for student in students%}
+              <tr>
+                <th scope="row">{{student.id}}</th>
+                <td>{{student.name}}</td>
+                <td>{{student.email}}</td>
+                <td>{{student.password}}</td>
+                <td>
+                    <a href="{% url 'update' student.id %}" class="btn btn-warning btn-sm">EDIT</a>
+                    <form action="{% url 'delete' student.id %}" method="POST" class="d-inline">
+                        {% csrf_token %}
+                        <input type="submit" class="btn btn-danger btn-sm" value="Delete">
+                    </form>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+
+    </div>
+</div>
+
+
+{% endblock%}
